@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandos Bash (Azure CLI) e Docker para o Exame AZ-204</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for Inter font and general body */
+        body {
+            font-family: 'Inter', sans-serif;
+            @apply bg-gray-100 text-gray-900; /* Light gray background, dark text */
+        }
+        /* Ensure code blocks handle long lines without horizontal scrollbars if possible */
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+    <!-- Google Fonts for Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="p-4 sm:p-6 md:p-8 lg:p-10">
+    <div class="container mx-auto bg-white p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl shadow-lg border border-gray-200 max-w-4xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center text-gray-800 mb-8 sm:mb-10 lg:mb-12 tracking-tight">
+            Comandos Bash (Azure CLI) e Docker para o Exame AZ-204
+        </h1>
+
+        <div class="info-box bg-blue-50 border-l-4 border-blue-600 text-blue-800 p-5 rounded-lg mb-8">
+            <p class="font-medium text-lg mb-2">Informação Importante:</p>
+            <p class="text-base leading-relaxed">Este documento apresenta comandos Bash (Azure CLI) e Docker relevantes para cada uma das competências do exame AZ-204. Note que muitos comandos exigem a substituição de valores como <code class="font-mono text-blue-700">&lt;nome-do-recurso&gt;</code>, <code class="font-mono text-blue-700">&lt;seu-grupo-de-recursos&gt;</code>, etc., por nomes reais.</p>
+            <p class="text-base leading-relaxed mt-3">O site foca no passo a passo usando o portal ou trechos de código C#, com alguns comandos Bash explicitamente mencionados na seção de Event Grid. Para outros tópicos, os comandos gerais da CLI foram inferidos para sua conveniência de estudo.</p>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-700 border-b-2 border-gray-300 pb-3 mb-6">
+            Desenvolver soluções de computação do Azure (25–30%)
+        </h2>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Implementar soluções conteinerizadas</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Criar e gerenciar imagens de contêiner para soluções</h4>
+        <p class="mb-2">Comando Docker para construir uma imagem:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">docker build . -t &lt;sua-imagem-acr&gt;.azurecr.io/myapp:v1</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Constrói uma imagem Docker a partir de um Dockerfile no diretório atual e a tagueia para um Registro de Contêiner do Azure (ACR).</p>
+
+        <p class="mb-2">Publicar uma imagem no Registro de Contêiner do Azure:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">docker push &lt;sua-imagem-acr&gt;.azurecr.io/myapp:v1</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Envia a imagem Docker tagueada para o Registro de Contêiner do Azure (ACR).</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Executar contêineres usando a Instância de Contêiner do Azure</h4>
+        <p class="mb-2">O ACI permite executar contêineres sem gerenciar VMs. O comando Azure CLI para criar uma instância de contêiner é:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az container create --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-da-instancia&gt; --image &lt;sua-imagem&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria uma instância de contêiner no Azure Container Instances (ACI) a partir de uma imagem Docker.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Criar soluções usando os Aplicativos de Contêiner do Azure</h4>
+        <p class="mb-2">O Azure Container Apps (ACA) é um ambiente serverless gerenciado. A criação de um aplicativo de contêiner usando a CLI envolve:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az containerapp create --name &lt;nome-do-app&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --environment &lt;nome-do-ambiente&gt; --image &lt;sua-imagem&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo aplicativo de contêiner no Azure Container Apps.</p>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Implementar Aplicativos Web do Serviço de Aplicativo do Azure</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Criar um Aplicativo de API do Serviço de Aplicativo do Azure</h4>
+        <p class="mb-2">Para criar um App Service (incluindo Web Apps e API Apps) via CLI, você usaria:</p>
+        <p class="mb-2">Cria um plano do App Service:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az appservice plan create --name &lt;nome-do-plano&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --sku F1</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um plano do Serviço de Aplicativo, que define os recursos de computação para os aplicativos web.</p>
+
+        <p class="mb-2">Cria um Web App:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az webapp create --name &lt;nome-do-webapp&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --plan &lt;nome-do-plano&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo aplicativo web dentro de um plano do Serviço de Aplicativo existente.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Configurar e implementar diagnósticos e registros</h4>
+        <p class="mb-2">Para transmitir logs em tempo real usando a CLI do Azure:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az webapp log tail --name appname --resource-group myResourceGroup</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Transmite logs em tempo real de um aplicativo web do Serviço de Aplicativo.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implantar código e soluções em contêineres</h4>
+        <p class="mb-2">Para implantação contínua ou via ZIP, a CLI teria comandos como:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az webapp deploy --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-do-webapp&gt; --src-path &lt;caminho-para-o-arquivo-zip&gt; --type zip</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Implanta o código de um aplicativo web a partir de um arquivo ZIP.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Definir configurações, incluindo o protocolo TLS (TLS), configurações de API e conexões de serviço</h4>
+        <p class="mb-2">Para configurar via CLI:</p>
+        <p class="mb-2">Definir configurações de aplicativo:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az webapp config appsettings set --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-do-webapp&gt; --settings &lt;CHAVE&gt;=&lt;VALOR&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Define uma configuração de aplicativo (app setting) para um aplicativo web.</p>
+
+        <p class="mb-2">Definir strings de conexão:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az webapp config connection-string set --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-do-webapp&gt; --settings &lt;NOME_CONEXAO&gt;=&lt;STRING_CONEXAO&gt; --connection-string-type Custom</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Define uma string de conexão para um aplicativo web.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implementar o dimensionamento automático</h4>
+        <p class="mb-2">A CLI do Azure para configurar o autoescalamento envolveria:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az monitor autoscale rule create --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-da-regra&gt; --resource &lt;ID-do-App-Service-Plan&gt; --condition "MetricName 'CpuPercentage' GreaterThan 70" --scale out 1</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria uma regra de autoescalamento para um plano do Serviço de Aplicativo, baseada numa métrica (ex: CPU).</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Configurar slots de implantação</h4>
+        <p class="mb-2">Na CLI do Azure, você usaria:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az webapp deployment slot create --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-do-webapp&gt; --slot &lt;nome-do-slot&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo slot de implantação para um aplicativo web.</p>
+
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az webapp deployment slot swap --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-do-webapp&gt; --slot &lt;nome-do-slot&gt; --target-slot production</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Troca o conteúdo de um slot de implantação com o slot de produção.</p>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Implementar Funções do Azure</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Criar e configurar um aplicativo do Azure Functions</h4>
+        <p class="mb-2">Para criar um Function App via CLI:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az functionapp create --resource-group &lt;seu-grupo-de-recursos&gt; --consumption-plan-location &lt;localizacao&gt; --runtime &lt;linguagem&gt; --functions-version 4 --name &lt;nome-do-functionapp&gt; --storage-account &lt;nome-da-conta-de-armazenamento&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo aplicativo de função do Azure (Function App).</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implementar gatilhos função usando operações de dados, temporizadores e webhooks</h4>
+        <p class="mb-2">Os comandos da CLI seriam para criar a função dentro do Function App existente:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az functionapp function create --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-do-functionapp&gt; --function-name &lt;nome-da-funcao&gt; --template "HttpTrigger" --language "C#"</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria uma nova função dentro de um Function App existente, usando um modelo (ex: HttpTrigger).</p>
+
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-700 border-b-2 border-gray-300 pb-3 mb-6 mt-10">
+            Desenvolver para armazenamento do Azure (15–20%)
+        </h2>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Desenvolver soluções que usam o Azure Cosmos DB</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Executar operações em contêineres e itens usando o SDK</h4>
+        <p class="mb-2">Para criar a conta Cosmos DB via CLI:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az cosmosdb create --name &lt;nome-da-conta&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --kind GlobalDocumentDB --default-consistency-level Session</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria uma nova conta do Azure Cosmos DB.</p>
+
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az cosmosdb sql database create --account-name &lt;nome-da-conta&gt; --name &lt;nome-do-banco&gt; --resource-group &lt;seu-grupo-de-recursos&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo banco de dados SQL (API Core) dentro de uma conta Cosmos DB.</p>
+
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az cosmosdb sql container create --account-name &lt;nome-da-conta&gt; --database-name &lt;nome-do-banco&gt; --name &lt;nome-do-container&gt; --partition-key-path /&lt;chave-de-particao&gt; --throughput 400 --resource-group &lt;seu-grupo-de-recursos&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo contêiner SQL (coleção) dentro de um banco de dados Cosmos DB.</p>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Desenvolver soluções que usam o Armazenamento de Blobs do Azure</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Definir e recuperar as propriedades e os metadados</h4>
+        <p class="mb-2">Para criar um contêiner via CLI:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az storage container create --name &lt;nome-do-container&gt; --account-name &lt;nome-da-conta-de-armazenamento&gt; --public-access off</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo contêiner de blob no Armazenamento de Blobs do Azure.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implementar políticas de armazenamento e gerenciamento do ciclo de vida de dados</h4>
+        <p class="mb-2">Para gerenciar via CLI (exemplo para aplicar uma política JSON):</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az storage account management-policy create --account-name &lt;nome-da-conta&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --policy @policy.json</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria ou atualiza uma política de gerenciamento do ciclo de vida para uma conta de armazenamento.</p>
+
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-700 border-b-2 border-gray-300 pb-3 mb-6 mt-10">
+            Implementar a segurança do Azure (15-20%)
+        </h2>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Implementar autenticação e autorização de usuário</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Autenticar e autorizar usuários usando a plataforma Microsoft Identity</h4>
+        <p class="mb-2">Na CLI, o registro de um aplicativo para Microsoft Identity Platform:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az ad app create --display-name &lt;nome-do-app&gt; --sign-in-audience AzureADandPersonalMicrosoftAccount</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo registro de aplicativo no Azure Active Directory para autenticação.</p>
+
+        <p class="mb-2">Obtém o ID do cliente:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az ad app show --id &lt;app-id&gt; --query appId --output tsv</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Mostra os detalhes de um registro de aplicativo, incluindo o ID do aplicativo (cliente).</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Criar e implementar assinaturas de acesso compartilhado (SAS)</h4>
+        <p class="mb-2">Para gerar um SAS via CLI:</p>
+        <p class="mb-2">SAS para um blob com permissão de leitura:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az storage blob generate-sas --account-name &lt;nome-da-conta&gt; --container-name &lt;nome-do-container&gt; --name &lt;nome-do-blob&gt; --permissions r --expiry &lt;data-de-expiracao-YYYY-MM-DDTHH:mmZ&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Gera um token de Assinatura de Acesso Compartilhado (SAS) para um blob específico, concedendo permissões limitadas.</p>
+
+        <p class="mb-2">SAS para um contêiner com permissões de leitura e listagem:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az storage container generate-sas --account-name &lt;nome-da-conta&gt; --name &lt;nome-do-container&gt; --permissions rl --expiry &lt;data-de-expiracao-YYYY-MM-DDTHH:mmZ&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Gera um token de Assinatura de Acesso Compartilhado (SAS) para um contêiner, concedendo permissões limitadas.</p>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Implementar soluções seguras do Azure</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Dados seguros de configuração de aplicativo usando a Configuração de Aplicativos ou o Azure Key Vault</h4>
+        <p class="mb-2">Para criar um Key Vault via CLI:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az keyvault create --name &lt;nome-do-keyvault&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --location &lt;localizacao&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo Azure Key Vault para armazenar segredos, chaves e certificados.</p>
+
+        <p class="mb-2">Para adicionar um segredo:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az keyvault secret set --vault-name &lt;nome-do-keyvault&gt; --name &lt;nome-do-segredo&gt; --value &lt;valor-do-segredo&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Define um novo segredo no Azure Key Vault.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implementação de identidades gerenciadas para recursos do Azure</h4>
+        <p class="mb-2">Para habilitar uma identidade gerenciada atribuída pelo sistema em um App Service:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az webapp identity assign --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-do-webapp&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Habilita uma identidade gerenciada atribuída pelo sistema para um aplicativo web do Serviço de Aplicativo.</p>
+
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-700 border-b-2 border-gray-300 pb-3 mb-6 mt-10">
+            Conectar e consumir serviços do Azure e serviços de terceiros (20-25%)
+        </h2>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Implementar a gestão da API</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Criar uma instância do Gerenciamento de API do Azure</h4>
+        <p class="mb-2">Para criar via CLI:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az apim create --name &lt;nome-do-apim&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --publisher-name &lt;nome-da-editora&gt; --publisher-email &lt;email-da-editora&gt; --sku-name Developer</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria uma nova instância do Gerenciamento de API do Azure.</p>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Desenvolver soluções baseadas em evento</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implementar soluções que usam Grade de Evento Azure</h4>
+        <p class="mb-2">Configuração de variáveis:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">let rNum=$RANDOM*$RANDOM
+myLocation=&lt;myLocation&gt;
+myTopicName="az204-egtopic-${rNum}"
+mySiteName="az204-egsite-${rNum}"
+mySiteURL="https://${mySiteName}.azurewebsites.net"</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Define variáveis para uso em comandos do Azure Event Grid.</p>
+
+        <p class="mb-2">Criação de grupo de recursos:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az group create --name az204-evgrid-rg --location &lt;myLocation&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo grupo de recursos para organizar recursos do Azure.</p>
+
+        <p class="mb-2">Registro do provedor de recursos:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az provider register --namespace Microsoft.EventGrid</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Registra o provedor de recursos do Event Grid na sua subscrição.</p>
+
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az provider show --namespace Microsoft.EventGrid --query "registrationState"</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Verifica o estado de registo do provedor de recursos do Event Grid.</p>
+
+        <p class="mb-2">Criação de tópico personalizado:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az eventgrid topic create --name $myTopicName --location $myLocation --resource-group az204-evgrid-rg</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um tópico personalizado do Azure Event Grid.</p>
+
+        <p class="mb-2">Implantação de web app (Event Grid Viewer):</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">sitename=&lt;your-site-name&gt;
+az deployment group create --resource-group az204-evgrid-rg --template-uri "https://raw.githubusercontent.com/Azure-Samples/azure-event-grid-viewer/master/azuredeploy.json" --parameters siteName=$sitename hostingPlanName=viewerhost</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Implanta um aplicativo web (Event Grid Viewer) usando um modelo ARM.</p>
+
+        <p class="mb-2">Assinatura de evento:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az eventgrid event-subscription create --name &lt;nome-da-assinatura&gt; --source-resource-id &lt;ID-do-topico&gt; --endpoint &lt;URL-do-endpoint-web-app&gt;/api/updates/</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria uma subscrição de evento para um tópico do Event Grid, direcionando os eventos para um endpoint.</p>
+
+        <p class="mb-2">Disparo de evento (exemplo de payload e curl):</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">event='[ {"id": "'"$RANDOM"'", "eventType": "recordInserted", "subject": "myapp/vehicles/motorcycles", "eventTime": "' date +%Y-%m-%dT%H:%M:%S%z '", "data":{ "make": "Ducati", "model": "Monster"},"dataVersion": "1.0"} ]'
+curl -X POST -H "aeg-sas-key: $key" -d "$event" $endpoint</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Dispara um evento personalizado para um tópico do Event Grid usando `curl`.</p>
+
+        <p class="mb-2">Limpeza de recursos:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az group delete --name gridResourceGroup</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Elimina um grupo de recursos e todos os recursos contidos nele.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implementar soluções que usam o Hub de Evento Azure</h4>
+        <p class="mb-2">Para criar via CLI:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az eventhubs namespace create --name &lt;nome-do-namespace&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --location &lt;localizacao&gt; --sku Basic</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo namespace do Azure Event Hubs.</p>
+
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az eventhubs eventhub create --name &lt;nome-do-eventhub&gt; --namespace-name &lt;nome-do-namespace&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --partition-count 2 --message-retention 1</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo Event Hub dentro de um namespace existente.</p>
+
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Desenvolver soluções baseadas em mensagem</h3>
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implementar soluções que usam o Barramento de Serviços Azure</h4>
+        <p class="mb-2">Para criar via CLI:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az servicebus namespace create --resource-group &lt;seu-grupo-de-recursos&gt; --name &lt;nome-do-namespace&gt; --location &lt;localizacao&gt; --sku Standard</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria um novo namespace do Azure Service Bus.</p>
+
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az servicebus queue create --resource-group &lt;seu-grupo-de-recursos&gt; --namespace-name &lt;nome-do-namespace&gt; --name &lt;nome-da-fila&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria uma nova fila dentro de um namespace do Service Bus.</p>
+
+        <h4 class="text-lg sm:text-xl font-medium text-gray-800 mb-3">Implementar soluções que usam filas de Armazenamento de Fila Azure</h4>
+        <p class="mb-2">Para obter a string de conexão via CLI:</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az storage account show-connection-string --name &lt;nome-da-conta-de-armazenamento&gt; --resource-group &lt;seu-grupo-de-recursos&gt; --query connectionString --output tsv</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Obtém a string de conexão de uma conta de armazenamento.</p>
+
+        <p class="mb-2">Para criar uma fila via CLI (assumindo que a conta de armazenamento já existe):</p>
+        <pre class="relative bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm sm:text-base border border-gray-300 mb-2">
+            <button class="copy-button absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm transition-colors duration-200" onclick="copyCode(this)">Copiar</button>
+            <code class="font-mono text-gray-900 block">az storage queue create --name &lt;nome-da-fila&gt; --account-name &lt;nome-da-conta-de-armazenamento&gt;</code>
+        </pre>
+        <p class="text-sm text-gray-600 mb-6">Cria uma nova fila no Armazenamento de Filas do Azure.</p>
+    </div>
+
+    <script>
+        // Função para copiar o código para a área de transferência
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling; // Pega o elemento <code>
+            const textToCopy = codeBlock.innerText;
+
+            // Usa document.execCommand('copy') por compatibilidade com iFrames
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                button.textContent = 'Copiado!'; // Feedback visual
+                setTimeout(() => {
+                    button.textContent = 'Copiar'; // Volta ao texto original
+                }, 2000);
+            } catch (err) {
+                console.error('Falha ao copiar o texto: ', err);
+                button.textContent = 'Erro!'; // Feedback de erro
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    </script>
+</body>
+</html>
