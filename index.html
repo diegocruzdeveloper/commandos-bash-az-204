@@ -3,84 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia Rápido AZ-204: Comandos CLI Essenciais</title>
+    <title>Guia Prático AZ-204: Passo a Passo com Azure CLI</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #f0f2f5;
+            color: #1e1e1e;
         }
         .container {
-            max-width: 960px;
-            margin: auto;
+            max-width: 1024px;
+            margin: 20px auto;
             background: #fff;
-            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
         header {
-            background-color: #0078D4;
+            background: linear-gradient(45deg, #0078D4, #004578);
             color: #fff;
-            padding: 1rem;
+            padding: 40px 30px;
             text-align: center;
-            border-radius: 8px 8px 0 0;
         }
         header h1 {
             margin: 0;
-            font-size: 2em;
+            font-size: 2.5em;
+            font-weight: 600;
         }
         header p {
-            margin: 0;
-            font-size: 1.1em;
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        main {
+            padding: 30px;
+        }
+        section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e1e1e1;
+        }
+        section:last-of-type {
+            border-bottom: none;
         }
         h2 {
-            border-bottom: 2px solid #0078D4;
-            padding-bottom: 5px;
-            color: #005A9E;
+            font-size: 2em;
+            color: #005a9e;
+            border-bottom: 3px solid #0078D4;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 25px;
+        h2 a {
+            text-decoration: none;
+            color: inherit;
         }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
+        h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin-top: 30px;
         }
-        th {
-            background-color: #e2eef9;
-            font-weight: bold;
+        p, li {
+            font-size: 1.05em;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.95em;
         }
         code {
-            background-color: #eee;
-            border-radius: 3px;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 2px 4px;
-            font-size: 0.95em;
-            color: #d63384;
+            font-family: inherit;
         }
-        td:first-child {
-            font-weight: bold;
-            color: #333;
-            width: 20%;
+        pre code .comment {
+            color: #6a9955; /* Cor para comentários */
+        }
+        pre code .variable {
+            color: #9cdcfe; /* Cor para variáveis */
+        }
+        pre code .command {
+            color: #dcdcaa; /* Cor para comandos */
+        }
+        .note {
+            background-color: #fff4e5;
+            border-left: 5px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .verification {
+            background-color: #e6ffed;
+            border-left: 5px solid #4caf50;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 5px 5px 0;
         }
         footer {
             text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-        }
-        @media (max-width: 768px) {
-            th, td {
-                font-size: 0.9em;
-            }
-            code {
-                font-size: 0.9em;
-            }
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
         }
     </style>
 </head>
@@ -88,204 +115,328 @@
 
     <div class="container">
         <header>
-            <h1>Guia Rápido de Comandos Azure CLI</h1>
-            <p>Resumo para a Certificação AZ-204</p>
+            <h1>Guia Prático AZ-204</h1>
+            <p>Criação de Recursos com Azure CLI: Passo a Passo</p>
         </header>
 
-        <section id="app-service">
-            <h2>Azure App Service</h2>
-            <table>
-                <tr>
-                    <th>Ação</th>
-                    <th>Comando Resumido</th>
-                </tr>
-                <tr>
-                    <td>Criar Plano</td>
-                    <td><code>az appservice plan create -g &lt;rg&gt; -n &lt;plan&gt; --sku B1 --is-linux</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Web App</td>
-                    <td><code>az webapp create -g &lt;rg&gt; -p &lt;plan&gt; -n &lt;app&gt; --runtime "DOTNET|8.0"</code></td>
-                </tr>
-                <tr>
-                    <td>Definir App Settings</td>
-                    <td><code>az webapp config appsettings set -g &lt;rg&gt; -n &lt;app&gt; --settings "K=V"</code></td>
-                </tr>
-            </table>
-        </section>
+        <main>
+            <section id="prerequisitos">
+                <h2>Pré-requisitos Essenciais</h2>
+                <div class="note">
+                    <strong>Importante:</strong> Execute estes comandos primeiro. Use o <a href="https://shell.azure.com/" target="_blank" style="color: #005a9e;">Azure Cloud Shell</a> para a melhor experiência.
+                </div>
+                <h3>1. Login e Definição de Variáveis</h3>
+                <p>Vamos definir algumas variáveis para reutilizar nos scripts, tornando os comandos mais limpos e fáceis de gerenciar.</p>
+                <pre><code><span class="comment"># Define variáveis para Localização e Grupo de Recursos</span>
+<span class="variable">LOCATION</span>="eastus"
+<span class="variable">RESOURCE_GROUP</span>="rg-az204-practice"
+</code></pre>
 
-        <section id="containers">
-            <h2>Soluções de Contêineres (ACR, ACI, ACA)</h2>
-            <table>
-                 <tr>
-                    <th>Ação</th>
-                    <th>Comando Resumido</th>
-                </tr>
-                <tr>
-                    <td>Criar ACR</td>
-                    <td><code>az acr create -g &lt;rg&gt; -n &lt;acr_name&gt; --sku Basic</code></td>
-                </tr>
-                <tr>
-                    <td>Criar ACI</td>
-                    <td><code>az container create -g &lt;rg&gt; -n &lt;container&gt; --image &lt;image&gt; --dns-name-label &lt;dns&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar App Contêiner</td>
-                    <td><code>az containerapp create -g &lt;rg&gt; -n &lt;aca_app&gt; --environment &lt;env&gt; --image &lt;image&gt;</code></td>
-                </tr>
-            </table>
-        </section>
+                <h3>2. Criação do Grupo de Recursos</h3>
+                <p>Todos os recursos do Azure precisam ser associados a um Grupo de Recursos. Ele funciona como um contêiner lógico para sua solução.</p>
+                <pre><code><span class="comment"># Cria o grupo de recursos que usaremos em todos os exemplos</span>
+<span class="command">az group create</span> --name $RESOURCE_GROUP --location $LOCATION
+</code></pre>
+            </section>
+            
+            <section id="app-service">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/create-azure-app-service-web-apps/" target="_blank">1. Criar Web App</a></h2>
+                <p>Para hospedar uma aplicação web, primeiro criamos um Plano (a computação) e depois o Web App (a aplicação).</p>
+                <h3>Passo 1: Criar o App Service Plan</h3>
+                <pre><code><span class="comment"># Define um nome único para o plano</span>
+<span class="variable">APPSERVICE_PLAN</span>="plan-az204-webapp"
 
-        <section id="functions">
-            <h2>Azure Functions</h2>
-            <table>
-                 <tr>
-                    <th>Ação</th>
-                    <th>Comando Resumido</th>
-                </tr>
-                <tr>
-                    <td>Criar Conta Storage</td>
-                    <td><code>az storage account create -g &lt;rg&gt; -n &lt;storage&gt; --sku Standard_LRS</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Function App</td>
-                    <td><code>az functionapp create -g &lt;rg&gt; -n &lt;func_app&gt; --storage-account &lt;storage&gt; --consumption-plan-location &lt;loc&gt;</code></td>
-                </tr>
-                 <tr>
-                    <td>Definir App Settings</td>
-                    <td><code>az functionapp config appsettings set -g &lt;rg&gt; -n &lt;func_app&gt; --settings "K=V"</code></td>
-                </tr>
-            </table>
-        </section>
+<span class="comment"># Cria o plano (usando o SKU B1 Básico e Linux)</span>
+<span class="command">az appservice plan create</span> \
+  --name $APPSERVICE_PLAN \
+  --resource-group $RESOURCE_GROUP \
+  --sku B1 \
+  --is-linux
+</code></pre>
+                <h3>Passo 2: Criar o Web App</h3>
+                <pre><code><span class="comment"># Define um nome globalmente único para o web app</span>
+<span class="variable">WEBAPP_NAME</span>="webapp-az204-$(openssl rand -hex 3)" 
 
-        <section id="storage">
-            <h2>Azure Blob Storage / Storage Queue</h2>
-            <table>
-                 <tr>
-                    <th>Ação</th>
-                    <th>Comando Resumido</th>
-                </tr>
-                <tr>
-                    <td>Criar Contêiner Blob</td>
-                    <td><code>az storage container create -n &lt;container&gt; --account-name &lt;storage&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Fazer Upload de Blob</td>
-                    <td><code>az storage blob upload -c &lt;container&gt; -f &lt;file&gt; -n &lt;blob_name&gt; --account-name &lt;storage&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Fila (Queue)</td>
-                    <td><code>az storage queue create -n &lt;queue&gt; --account-name &lt;storage&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Enviar Mensagem Fila</td>
-                    <td><code>az storage message put -q &lt;queue&gt; --content "Hello" --account-name &lt;storage&gt;</code></td>
-                </tr>
-            </table>
-        </section>
-        
-        <section id="cosmosdb">
-            <h2>Azure Cosmos DB (SQL API)</h2>
-            <table>
-                 <tr>
-                    <th>Ação</th>
-                    <th>Comando Resumido</th>
-                </tr>
-                <tr>
-                    <td>Criar Conta</td>
-                    <td><code>az cosmosdb create -g &lt;rg&gt; -n &lt;cosmos_account&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Banco de Dados</td>
-                    <td><code>az cosmosdb sql database create -g &lt;rg&gt; -a &lt;cosmos_account&gt; -n &lt;db_name&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Contêiner</td>
-                    <td><code>az cosmosdb sql container create -g &lt;rg&gt; -a &lt;cosmos_account&gt; -d &lt;db_name&gt; -n &lt;container&gt; -p /pk</code></td>
-                </tr>
-            </table>
-        </section>
+<span class="comment"># Cria o web app com o runtime do .NET 8</span>
+<span class="command">az webapp create</span> \
+  --name $WEBAPP_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --plan $APPSERVICE_PLAN \
+  --runtime "DOTNET|8.0"
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> Acesse a URL <code>https://&lt;NOME_DO_SEU_WEBAPP&gt;.azurewebsites.net</code> para ver a página padrão.
+                </div>
+            </section>
+            
+            <section id="containers">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/az-204-implement-iaas-solutions/" target="_blank">2. Implementar Soluções IaaS (Contêineres)</a></h2>
+                <p>Criaremos um registro privado para imagens de contêiner (ACR) e executaremos uma imagem em uma Instância de Contêiner (ACI).</p>
+                <h3>Passo 1: Criar o Azure Container Registry (ACR)</h3>
+                 <pre><code><span class="comment"># Define um nome globalmente único para o seu ACR</span>
+<span class="variable">ACR_NAME</span>="acraz204$(openssl rand -hex 3)"
 
-        <section id="security">
-            <h2>Entra ID / Key Vault / Microsoft Graph</h2>
-            <table>
-                 <tr>
-                    <th>Ação</th>
-                    <th>Comando Resumido</th>
-                </tr>
-                <tr>
-                    <td>Criar Registro de App</td>
-                    <td><code>az ad app create --display-name "MyApp"</code></td>
-                </tr>
-                 <tr>
-                    <td>Criar Service Principal</td>
-                    <td><code>az ad sp create --id &lt;app_id&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Key Vault</td>
-                    <td><code>az keyvault create -g &lt;rg&gt; -n &lt;kv_name&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Definir Segredo</td>
-                    <td><code>az keyvault secret set --vault-name &lt;kv_name&gt; -n &lt;secret_name&gt; --value &lt;secret&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Definir Política de Acesso</td>
-                    <td><code>az keyvault set-policy -n &lt;kv_name&gt; --object-id &lt;obj_id&gt; --secret-permissions get</code></td>
-                </tr>
-            </table>
-        </section>
-        
-        <section id="messaging">
-            <h2>Service Bus / Event Grid / Event Hub</h2>
-            <table>
-                 <tr>
-                    <th>Ação</th>
-                    <th>Comando Resumido</th>
-                </tr>
-                <tr>
-                    <td>Criar Namespace SB</td>
-                    <td><code>az servicebus namespace create -g &lt;rg&gt; -n &lt;sb_namespace&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Fila SB</td>
-                    <td><code>az servicebus queue create -g &lt;rg&gt; --namespace-name &lt;sb_namespace&gt; -n &lt;queue&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Tópico Event Grid</td>
-                    <td><code>az eventgrid topic create -g &lt;rg&gt; -n &lt;eg_topic&gt; -l &lt;location&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Namespace EH</td>
-                    <td><code>az eventhubs namespace create -g &lt;rg&gt; -n &lt;eh_namespace&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Criar Event Hub</td>
-                    <td><code>az eventhubs eventhub create -g &lt;rg&gt; --namespace-name &lt;eh_namespace&gt; -n &lt;hub_name&gt;</code></td>
-                </tr>
-            </table>
-        </section>
-        
-        <section id="apim">
-            <h2>API Management (APIM)</h2>
-            <table>
-                 <tr>
-                    <th>Ação</th>
-                    <th>Comando Resumido</th>
-                </tr>
-                <tr>
-                    <td>Criar Instância APIM</td>
-                    <td><code>az apim create -g &lt;rg&gt; -n &lt;apim_name&gt; --publisher-name "Org" --publisher-email email@... --sku-name Consumption</code></td>
-                </tr>
-                <tr>
-                    <td>Importar API</td>
-                    <td><code>az apim api import -g &lt;rg&gt; -n &lt;apim_name&gt; --path /myapi --api-id myapi --specification-url &lt;url&gt;</code></td>
-                </tr>
-            </table>
-        </section>
+<span class="comment"># Comando para criar o ACR</span>
+<span class="command">az acr create</span> \
+  --name $ACR_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --sku Basic \
+  --admin-enabled true
+</code></pre>
+                <h3>Passo 2: Criar a Azure Container Instance (ACI)</h3>
+                <pre><code><span class="comment"># Define um nome para a instância de contêiner</span>
+<span class="variable">ACI_NAME</span>="aci-az204-helloworld"
+
+<span class="comment"># Cria a instância de contêiner com uma imagem pública de exemplo</span>
+<span class="command">az container create</span> \
+  --name $ACI_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --image mcr.microsoft.com/azuredocs/aci-helloworld \
+  --dns-name-label "aci-az204-$(openssl rand -hex 3)" \
+  --ports 80
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> O comando de criação do ACI retornará um FQDN (URL). Acesse essa URL no seu navegador.
+                </div>
+            </section>
+            
+            <section id="functions">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/implement-azure-functions/" target="_blank">3. Implementar Azure Functions</a></h2>
+                <p>Uma Function App precisa de uma Conta de Armazenamento para operar. Vamos criar ambos os recursos.</p>
+                <h3>Passo 1: Criar a Conta de Armazenamento</h3>
+                <pre><code><span class="comment"># Define um nome globalmente único para a conta de armazenamento</span>
+<span class="variable">STORAGE_NAME_FUNC</span>="staz204func$(openssl rand -hex 3)"
+
+<span class="comment"># Comando para criar a conta de armazenamento</span>
+<span class="command">az storage account create</span> \
+  --name $STORAGE_NAME_FUNC \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
+  --sku Standard_LRS
+</code></pre>
+                <h3>Passo 2: Criar o Aplicativo de Funções</h3>
+                <pre><code><span class="comment"># Define um nome globalmente único para o seu Function App</span>
+<span class="variable">FUNCTIONAPP_NAME</span>="func-az204-$(openssl rand -hex 3)"
+
+<span class="comment"># Cria o Function App em um plano de consumo</span>
+<span class="command">az functionapp create</span> \
+  --name $FUNCTIONAPP_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --storage-account $STORAGE_NAME_FUNC \
+  --consumption-plan-location $LOCATION \
+  --runtime dotnet-isolated \
+  --functions-version 4
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> No Portal do Azure, verifique se o Aplicativo de Funções foi criado com sucesso no seu grupo de recursos.
+                </div>
+            </section>
+
+            <section id="blob-storage">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/develop-solutions-that-use-blob-storage/" target="_blank">4. Usar o Armazenamento de Blobs</a></h2>
+                <p>Vamos criar uma conta de armazenamento e, dentro dela, um contêiner para armazenar arquivos (blobs).</p>
+                <h3>Passo 1: Criar a Conta de Armazenamento</h3>
+                <pre><code><span class="comment"># Defina um nome globalmente único</span>
+<span class="variable">STORAGE_NAME_BLOB</span>="staz204blob$(openssl rand -hex 3)"
+
+<span class="comment"># Comando para criar a conta de armazenamento</span>
+<span class="command">az storage account create</span> \
+  --name $STORAGE_NAME_BLOB \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
+  --sku Standard_LRS
+</code></pre>
+                <h3>Passo 2: Criar um Contêiner de Blob</h3>
+                <pre><code><span class="comment"># Cria um contêiner chamado 'data'</span>
+<span class="command">az storage container create</span> \
+  --name "data" \
+  --account-name $STORAGE_NAME_BLOB
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> Liste os contêineres para confirmar a criação: <br> 
+                    <code>az storage container list --account-name $STORAGE_NAME_BLOB --output table</code>
+                </div>
+            </section>
+
+            <section id="cosmosdb">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/az-204-develop-solutions-that-use-azure-cosmos-db/" target="_blank">5. Usar o Azure Cosmos DB</a></h2>
+                <p>Criaremos uma conta Cosmos DB com a API SQL, depois um banco de dados e, finalmente, um contêiner para armazenar os dados.</p>
+                <h3>Passo 1: Criar a Conta do Cosmos DB</h3>
+                <pre><code><span class="comment"># Define um nome globalmente único para a conta</span>
+<span class="variable">COSMOSDB_ACCOUNT</span>="cosmos-az204-$(openssl rand -hex 3)"
+
+<span class="comment"># Cria a conta do Cosmos DB</span>
+<span class="command">az cosmosdb create</span> \
+  --name $COSMOSDB_ACCOUNT \
+  --resource-group $RESOURCE_GROUP
+</code></pre>
+                <h3>Passo 2: Criar o Banco de Dados e o Contêiner</h3>
+                <pre><code><span class="comment"># Cria o Banco de Dados</span>
+<span class="command">az cosmosdb sql database create</span> \
+  --account-name $COSMOSDB_ACCOUNT \
+  --resource-group $RESOURCE_GROUP \
+  --name "ToDoList"
+
+<span class="comment"># Cria o Contêiner com uma chave de partição</span>
+<span class="command">az cosmosdb sql container create</span> \
+  --account-name $COSMOSDB_ACCOUNT \
+  --resource-group $RESOURCE_GROUP \
+  --database-name "ToDoList" \
+  --name "Items" \
+  --partition-key-path "/category"
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> Liste os bancos de dados na sua conta: <br>
+                    <code>az cosmosdb sql database list --account-name $COSMOSDB_ACCOUNT -g $RESOURCE_GROUP -o table</code>
+                </div>
+            </section>
+
+            <section id="auth">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/az-204-implement-authentication-authorization/" target="_blank">6. Implementar Autenticação (Entra ID)</a></h2>
+                <p>Para que uma aplicação acesse recursos do Azure, ela precisa de uma identidade. Criamos isso com um Registro de Aplicativo.</p>
+                <h3>Passo 1: Registrar o Aplicativo</h3>
+                <pre><code><span class="comment"># Cria o registro do aplicativo. Anote o "appId" do resultado.</span>
+<span class="command">az ad app create</span> --display-name "az204-practice-app"
+</code></pre>
+                <h3>Passo 2: Criar a Entidade de Serviço (Service Principal)</h3>
+                <pre><code><span class="comment"># Use o appId que você anotou na etapa anterior</span>
+<span class="variable">APP_ID</span>="&lt;COLE_O_APP_ID_AQUI&gt;"
+
+<span class="comment"># Cria a entidade de serviço (a instância local do app)</span>
+<span class="command">az ad sp create</span> --id $APP_ID
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> Liste as entidades de serviço com o nome de exibição: <br>
+                    <code>az ad sp list --display-name "az204-practice-app" --output table</code>
+                </div>
+            </section>
+
+            <section id="key-vault">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/az-204-implement-secure-cloud-solutions/" target="_blank">7. Soluções Seguras (Key Vault)</a></h2>
+                <p>O Key Vault armazena segredos de forma segura. Vamos criar um e guardar uma string de conexão nele.</p>
+                <h3>Passo 1: Criar o Azure Key Vault</h3>
+                <pre><code><span class="comment"># Define um nome globalmente único para o seu Key Vault</span>
+<span class="variable">KEYVAULT_NAME</span>="kv-az204-$(openssl rand -hex 3)"
+
+<span class="comment"># Cria o Key Vault</span>
+<span class="command">az keyvault create</span> \
+  --name $KEYVAULT_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION
+</code></pre>
+                <h3>Passo 2: Adicionar um Segredo</h3>
+                <pre><code><span class="comment"># Cria um segredo chamado "DbConnectionString"</span>
+<span class="command">az keyvault secret set</span> \
+  --vault-name $KEYVAULT_NAME \
+  --name "DbConnectionString" \
+  --value "uma-string-de-conexao-super-secreta"
+</code></pre>
+                 <div class="verification">
+                    <strong>Verificação:</strong> Leia o segredo que você acabou de criar: <br>
+                    <code>az keyvault secret show --name "DbConnectionString" --vault-name $KEYVAULT_NAME</code>
+                </div>
+            </section>
+            
+            <section id="apim">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/az-204-implement-api-management/" target="_blank">8. Implementar API Management</a></h2>
+                <div class="note"><strong>Aviso:</strong> A criação deste recurso pode demorar. O SKU <code>Consumption</code> é o mais rápido e barato para estudo.</div>
+                <h3>Passo 1: Criar a Instância do APIM</h3>
+                <pre><code><span class="comment"># Define um nome globalmente único</span>
+<span class="variable">APIM_NAME</span>="apim-az204-$(openssl rand -hex 3)"
+
+<span class="comment"># Cria a instância do APIM</span>
+<span class="command">az apim create</span> \
+  --name $APIM_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
+  --publisher-name "Meu Estudo" \
+  --publisher-email "estudo@contoso.com" \
+  --sku-name Consumption
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> Cheque o status da criação: <br>
+                    <code>az apim show --name $APIM_NAME --resource-group $RESOURCE_GROUP</code>
+                </div>
+            </section>
+
+            <section id="event-grid">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/az-204-develop-event-based-solutions/" target="_blank">9. Soluções Baseadas em Eventos (Event Grid)</a></h2>
+                <p>Criaremos um Tópico Personalizado do Event Grid, que serve como um endpoint para suas aplicações publicarem eventos.</p>
+                <h3>Passo 1: Criar um Tópico Personalizado</h3>
+                <pre><code><span class="comment"># Define um nome para o tópico</span>
+<span class="variable">EVENTGRID_TOPIC</span>="topic-az204-orders"
+
+<span class="comment"># Cria o tópico do Event Grid</span>
+<span class="command">az eventgrid topic create</span> \
+  --name $EVENTGRID_TOPIC \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> Liste os tópicos para confirmar: <br>
+                    <code>az eventgrid topic list --resource-group $RESOURCE_GROUP --output table</code>
+                </div>
+            </section>
+
+            <section id="service-bus">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/az-204-develop-message-based-solutions/" target="_blank">10. Soluções Baseadas em Mensagens (Service Bus)</a></h2>
+                <p>O Service Bus é ideal para mensageria confiável. Criaremos um Namespace e uma Fila dentro dele.</p>
+                <h3>Passo 1: Criar um Namespace do Service Bus</h3>
+                <pre><code><span class="comment"># Define um nome globalmente único para o namespace</span>
+<span class="variable">SERVICEBUS_NAMESPACE</span>="sb-az204-$(openssl rand -hex 3)"
+
+<span class="comment"># Cria o namespace</span>
+<span class="command">az servicebus namespace create</span> \
+  --name $SERVICEBUS_NAMESPACE \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION
+</code></pre>
+                <h3>Passo 2: Criar uma Fila (Queue)</h3>
+                <pre><code><span class="comment"># Cria uma fila chamada 'orders' dentro do namespace</span>
+<span class="command">az servicebus queue create</span> \
+  --name "orders" \
+  --namespace-name $SERVICEBUS_NAMESPACE \
+  --resource-group $RESOURCE_GROUP
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> Liste as filas no namespace: <br>
+                    <code>az servicebus queue list --namespace-name $SERVICEBUS_NAMESPACE -g $RESOURCE_GROUP -o table</code>
+                </div>
+            </section>
+
+            <section id="app-insights">
+                <h2><a href="https://learn.microsoft.com/pt-br/training/paths/az-204-instrument-solutions-support-monitoring-logging/" target="_blank">11. Monitoramento (Application Insights)</a></h2>
+                <p>O Application Insights é o serviço de APM do Azure para monitorar a saúde e o desempenho de suas aplicações.</p>
+                <h3>Passo 1: Criar um Recurso do Application Insights</h3>
+                <pre><code><span class="comment"># Define um nome para o recurso</span>
+<span class="variable">APPINSIGHTS_NAME</span>="appi-az204-$(openssl rand -hex 3)"
+
+<span class="comment"># Cria o recurso do Application Insights</span>
+<span class="command">az monitor app-insights component create</span> \
+  --app $APPINSIGHTS_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
+  --kind web
+</code></pre>
+                <div class="verification">
+                    <strong>Verificação:</strong> O resultado do comando mostrará a <code>instrumentationKey</code>. Você pode exibi-la novamente com: <br>
+                    <code>az monitor app-insights component show --app $APPINSIGHTS_NAME -g $RESOURCE_GROUP</code>
+                </div>
+            </section>
+            
+            <section id="limpeza">
+                <h2>Limpeza dos Recursos</h2>
+                <div class="note" style="border-left-color: #d32f2f; background-color: #ffebee;">
+                    <strong>Ação Final Importante:</strong> Para evitar custos inesperados, sempre exclua o grupo de recursos após concluir seus estudos. Isso removerá todos os recursos que criamos.
+                </div>
+                <pre><code><span class="comment"># Exclui o grupo de recursos e todos os recursos dentro dele</span>
+<span class="command">az group delete</span> --name $RESOURCE_GROUP --yes --no-wait
+</code></pre>
+            </section>
+        </main>
 
         <footer>
-            <p>Bons estudos para sua certificação AZ-204! Pratique estes comandos para dominar a CLI do Azure.</p>
+            <p>Bons estudos para sua certificação AZ-204! A prática constante com a CLI é o caminho para o sucesso.</p>
         </footer>
     </div>
 
